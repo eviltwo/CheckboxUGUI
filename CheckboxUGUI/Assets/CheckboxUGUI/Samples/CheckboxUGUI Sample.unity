@@ -1437,6 +1437,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 940469401}
+  ItemSelectionBehavior: 1
+  InnerNavigationAxis: 1
 --- !u!114 &940469401
 MonoBehaviour:
   m_ObjectHideFlags: 0
