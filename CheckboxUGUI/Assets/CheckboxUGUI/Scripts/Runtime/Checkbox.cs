@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -27,6 +28,8 @@ namespace CheckboxUGUI
         }
 
         public Axis InnerNavigationAxis = Axis.Horizontal;
+
+        public UnityEvent OnValueChanged;
 
         private static List<ICheckboxItem> _itemBuffer = new List<ICheckboxItem>();
 
@@ -140,7 +143,7 @@ namespace CheckboxUGUI
                     NotifyChangeSelection(_selectedItem, item);
                     _selectedItem = item;
                     item.SetState(!item.GetState());
-                    Debug.Log(item.GetState());
+                    OnValueChanged.Invoke();
                 }
             }
         }
@@ -152,6 +155,7 @@ namespace CheckboxUGUI
             {
                 var item = _itemBuffer[_selectedIndex];
                 item.SetState(!item.GetState());
+                OnValueChanged.Invoke();
             }
         }
 
