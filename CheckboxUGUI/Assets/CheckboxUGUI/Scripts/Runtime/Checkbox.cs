@@ -28,9 +28,11 @@ namespace CheckboxUGUI
 
         public Axis InnerNavigationAxis = Axis.Horizontal;
 
-        private static List<ICheckboxItem> _iconBuffer = new List<ICheckboxItem>();
+        private static List<ICheckboxItem> _itemBuffer = new List<ICheckboxItem>();
 
         private int _selectedIndex;
+
+        private ICheckboxItem _selectedItem;
 
         public override void OnSelect(BaseEventData eventData)
         {
@@ -39,6 +41,22 @@ namespace CheckboxUGUI
             {
                 _selectedIndex = 0;
             }
+
+            CollectItems(_itemBuffer);
+            if (_itemBuffer.Count > 0)
+            {
+                _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _itemBuffer.Count - 1);
+                var nextItem = _itemBuffer[_selectedIndex];
+                NotifyChangeSelection(_selectedItem, nextItem);
+                _selectedItem = nextItem;
+            }
+        }
+
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            base.OnDeselect(eventData);
+            NotifyChangeSelection(_selectedItem, null);
+            _selectedItem = null;
         }
 
         public override void OnMove(AxisEventData eventData)
@@ -46,16 +64,18 @@ namespace CheckboxUGUI
             var moveInner = false;
             if (CanInnerMove(eventData.moveDir))
             {
-                CollectIcons(_iconBuffer);
-                if (_iconBuffer.Count > 0)
+                CollectItems(_itemBuffer);
+                if (_itemBuffer.Count > 0)
                 {
-                    _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _iconBuffer.Count - 1);
-                    var currentIcon = _iconBuffer[_selectedIndex];
-                    var nextIndex = FindIcon(eventData.moveVector, currentIcon, _iconBuffer);
+                    _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _itemBuffer.Count - 1);
+                    var nextIndex = FindItem(eventData.moveVector, _itemBuffer[_selectedIndex], _itemBuffer);
                     if (nextIndex >= 0)
                     {
                         _selectedIndex = nextIndex;
                         moveInner = true;
+                        var nextItem = _itemBuffer[_selectedIndex];
+                        NotifyChangeSelection(_selectedItem, nextItem);
+                        _selectedItem = nextItem;
                     }
                 }
             }
@@ -78,21 +98,21 @@ namespace CheckboxUGUI
             }
         }
 
-        private static int FindIcon(Vector2 direction, ICheckboxItem currentIcon, IReadOnlyList<ICheckboxItem> icons)
+        private static int FindItem(Vector2 direction, ICheckboxItem currentItem, IReadOnlyList<ICheckboxItem> items)
         {
-            var currentPos = currentIcon.GetLocalPosition();
+            var currentPos = currentItem.GetLocalPosition();
             var closestIndex = -1;
             var maxScore = 0f;
-            for (int i = 0; i < icons.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                var icon = icons[i];
-                if (icon == currentIcon)
+                var item = items[i];
+                if (item == currentItem)
                 {
                     continue;
                 }
 
-                var iconPos = icon.GetLocalPosition();
-                var vec = iconPos - currentPos;
+                var itemPos = item.GetLocalPosition();
+                var vec = itemPos - currentPos;
                 var score = Vector2.Dot(vec, direction) / vec.sqrMagnitude;
                 if (score > maxScore)
                 {
@@ -111,41 +131,44 @@ namespace CheckboxUGUI
             var camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, camera, out var localPoint))
             {
-                CollectIcons(_iconBuffer);
-                var index = GetClosestIcon(_iconBuffer, localPoint);
+                CollectItems(_itemBuffer);
+                var index = GetClosestItem(_itemBuffer, localPoint);
                 if (index >= 0)
                 {
                     _selectedIndex = index;
-                    var icon = _iconBuffer[_selectedIndex];
-                    icon.SetState(!icon.GetState());
+                    var item = _itemBuffer[_selectedIndex];
+                    NotifyChangeSelection(_selectedItem, item);
+                    _selectedItem = item;
+                    item.SetState(!item.GetState());
+                    Debug.Log(item.GetState());
                 }
             }
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            CollectIcons(_iconBuffer);
-            if (_iconBuffer.Count > 0 && _selectedIndex < _iconBuffer.Count)
+            CollectItems(_itemBuffer);
+            if (_itemBuffer.Count > 0 && _selectedIndex < _itemBuffer.Count)
             {
-                var icon = _iconBuffer[_selectedIndex];
-                icon.SetState(!icon.GetState());
+                var item = _itemBuffer[_selectedIndex];
+                item.SetState(!item.GetState());
             }
         }
 
-        public void CollectIcons(List<ICheckboxItem> results)
+        public void CollectItems(List<ICheckboxItem> results)
         {
             results.Clear();
-            transform.GetComponentsInChildren(_iconBuffer);
+            transform.GetComponentsInChildren(_itemBuffer);
         }
 
-        public int GetClosestIcon(IReadOnlyList<ICheckboxItem> icons, Vector2 position)
+        public int GetClosestItem(IReadOnlyList<ICheckboxItem> items, Vector2 position)
         {
             var closestIndex = -1;
             var closestDistance = float.MaxValue;
-            for (int i = 0; i < icons.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                var icon = icons[i];
-                var distance = (icon.GetLocalPosition() - position).sqrMagnitude;
+                var item = items[i];
+                var distance = (item.GetLocalPosition() - position).sqrMagnitude;
                 if (distance < closestDistance)
                 {
                     closestIndex = i;
@@ -164,6 +187,24 @@ namespace CheckboxUGUI
             }
 
             return GetComponentInParent<Canvas>();
+        }
+
+        private void NotifyChangeSelection(ICheckboxItem prev, ICheckboxItem next)
+        {
+            if (prev == next)
+            {
+                return;
+            }
+
+            if (prev != null && !prev.IsDestroyed())
+            {
+                prev.NotifyDeselect();
+            }
+
+            if (next != null && !next.IsDestroyed())
+            {
+                next.NotifySelect();
+            }
         }
     }
 }

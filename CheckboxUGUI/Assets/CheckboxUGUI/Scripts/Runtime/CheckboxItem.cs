@@ -14,6 +14,10 @@ namespace CheckboxUGUI
             return (Vector2)rectTransform.localPosition + rectTransform.rect.position + rectTransform.rect.size * 0.5f;
         }
 
+        public abstract void NotifySelect();
+
+        public abstract void NotifyDeselect();
+
         public virtual void SetState(bool isOn)
         {
             IsOn = isOn;

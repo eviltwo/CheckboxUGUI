@@ -7,6 +7,10 @@ namespace CheckboxUGUI
     [RequireComponent(typeof(RectTransform))]
     public class CheckboxItemTrigger : CheckboxItem, ICheckboxItem
     {
+        public UnityEvent OnSelected;
+
+        public UnityEvent OnDeselected;
+
         public bool InvokeOnAwake = true;
 
         public UnityEvent<bool> OnValueChanged;
@@ -18,6 +22,16 @@ namespace CheckboxUGUI
             {
                 OnValueChanged.Invoke(IsOn);
             }
+        }
+
+        public override void NotifySelect()
+        {
+            OnSelected.Invoke();
+        }
+
+        public override void NotifyDeselect()
+        {
+            OnDeselected.Invoke();
         }
 
         public override void SetState(bool isOn)
