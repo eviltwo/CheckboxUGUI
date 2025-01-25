@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,7 +10,7 @@ namespace CheckboxUGUI
 {
     [AddComponentMenu("UI/Checkbox")]
     [RequireComponent(typeof(RectTransform))]
-    public class Checkbox : Selectable, IPointerClickHandler, ISubmitHandler
+    public class Checkbox : Selectable, ISubmitHandler
     {
         public enum SelectionBehavior
         {
@@ -29,6 +30,10 @@ namespace CheckboxUGUI
 
         public Axis InnerNavigationAxis = Axis.Horizontal;
 
+        public bool IsRadioButton = false;
+
+        public bool TurnOnWhenSelected = false;
+
         public UnityEvent OnValueChanged;
 
         private static List<ICheckboxItem> _itemBuffer = new List<ICheckboxItem>();
@@ -36,6 +41,26 @@ namespace CheckboxUGUI
         private int _selectedIndex;
 
         private ICheckboxItem _selectedItem;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            if (IsRadioButton)
+            {
+                CollectItems(_itemBuffer);
+                if (_itemBuffer.Count > 0 && !_itemBuffer.Any(v => v.GetState()))
+                {
+                    _itemBuffer[0].SetState(true);
+                    OnValueChanged.Invoke();
+                }
+            }
+        }
 
         public override void OnSelect(BaseEventData eventData)
         {
@@ -52,6 +77,15 @@ namespace CheckboxUGUI
                 var nextItem = _itemBuffer[_selectedIndex];
                 NotifyChangeSelection(_selectedItem, nextItem);
                 _selectedItem = nextItem;
+                if (TurnOnWhenSelected)
+                {
+                    _selectedItem.SetState(true);
+                    if (IsRadioButton)
+                    {
+                        SetOffOthers(_selectedItem, _itemBuffer);
+                    }
+                    OnValueChanged.Invoke();
+                }
             }
         }
 
@@ -79,6 +113,15 @@ namespace CheckboxUGUI
                         var nextItem = _itemBuffer[_selectedIndex];
                         NotifyChangeSelection(_selectedItem, nextItem);
                         _selectedItem = nextItem;
+                        if (TurnOnWhenSelected)
+                        {
+                            _selectedItem.SetState(true);
+                            if (IsRadioButton)
+                            {
+                                SetOffOthers(_selectedItem, _itemBuffer);
+                            }
+                            OnValueChanged.Invoke();
+                        }
                     }
                 }
             }
@@ -127,8 +170,9 @@ namespace CheckboxUGUI
             return closestIndex;
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public override void OnPointerDown(PointerEventData eventData)
         {
+            base.OnPointerDown(eventData);
             var rectTransform = transform as RectTransform;
             var canvas = GetCanvas();
             var camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
@@ -142,7 +186,15 @@ namespace CheckboxUGUI
                     var item = _itemBuffer[_selectedIndex];
                     NotifyChangeSelection(_selectedItem, item);
                     _selectedItem = item;
-                    item.SetState(!item.GetState());
+                    if (IsRadioButton)
+                    {
+                        item.SetState(true);
+                        SetOffOthers(item, _itemBuffer);
+                    }
+                    else
+                    {
+                        item.SetState(!item.GetState());
+                    }
                     OnValueChanged.Invoke();
                 }
             }
@@ -154,7 +206,15 @@ namespace CheckboxUGUI
             if (_itemBuffer.Count > 0 && _selectedIndex < _itemBuffer.Count)
             {
                 var item = _itemBuffer[_selectedIndex];
-                item.SetState(!item.GetState());
+                if (IsRadioButton)
+                {
+                    item.SetState(true);
+                    SetOffOthers(item, _itemBuffer);
+                }
+                else
+                {
+                    item.SetState(!item.GetState());
+                }
                 OnValueChanged.Invoke();
             }
         }
@@ -208,6 +268,17 @@ namespace CheckboxUGUI
             if (next != null && !next.IsDestroyed())
             {
                 next.NotifySelect();
+            }
+        }
+
+        public void SetOffOthers(ICheckboxItem item, IReadOnlyList<ICheckboxItem> items)
+        {
+            foreach (var i in items)
+            {
+                if (i != item)
+                {
+                    i.SetState(false);
+                }
             }
         }
     }
