@@ -1,0 +1,17 @@
+{
+    "name": "com.eviltwo.checkbox-ugui",
+    "displayName": "Checkbox uGUI",
+    "version": "1.0.0",
+    "unity": "6000.0",
+    "description": "Checkbox and Radio button for uGUI.",
+    "author": {
+        "name": "DAIKI(eviltwo)",
+        "url": "https://github.com/eviltwo"
+    },
+
+    "keywords": [
+    ],
+
+    "dependencies": {
+    }
+}
