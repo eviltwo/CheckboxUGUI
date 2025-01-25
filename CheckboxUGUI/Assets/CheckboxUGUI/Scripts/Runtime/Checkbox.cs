@@ -281,5 +281,11 @@ namespace CheckboxUGUI
                 }
             }
         }
+
+        public int GetTurnedOnIndex()
+        {
+            CollectItems(_itemBuffer);
+            return _itemBuffer.FindIndex(v => v.GetState());
+        }
     }
 }
