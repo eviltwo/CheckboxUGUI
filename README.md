@@ -8,7 +8,7 @@ Checkboxes and Radio buttons.
 
 Simple navigation.
 
-![nav](https://github.com/user-attachments/assets/a6a542af-aff8-4907-9d1c-6d3e2c169b7b)
+<img src="https://github.com/user-attachments/assets/a6a542af-aff8-4907-9d1c-6d3e2c169b7b" width="300">
 
 Smooth keyboard navigation.
 
