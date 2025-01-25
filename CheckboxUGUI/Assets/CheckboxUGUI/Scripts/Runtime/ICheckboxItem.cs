@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CheckboxUGUI
 {
-    public interface ICheckboxIcon
+    public interface ICheckboxItem
     {
         Vector2 GetLocalPosition();
 

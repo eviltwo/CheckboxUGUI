@@ -28,7 +28,7 @@ namespace CheckboxUGUI
 
         public Axis InnerNavigationAxis = Axis.Horizontal;
 
-        private static List<ICheckboxIcon> _iconBuffer = new List<ICheckboxIcon>();
+        private static List<ICheckboxItem> _iconBuffer = new List<ICheckboxItem>();
 
         private int _selectedIndex;
 
@@ -78,7 +78,7 @@ namespace CheckboxUGUI
             }
         }
 
-        private static int FindIcon(Vector2 direction, ICheckboxIcon currentIcon, IReadOnlyList<ICheckboxIcon> icons)
+        private static int FindIcon(Vector2 direction, ICheckboxItem currentIcon, IReadOnlyList<ICheckboxItem> icons)
         {
             var currentPos = currentIcon.GetLocalPosition();
             var closestIndex = -1;
@@ -132,13 +132,13 @@ namespace CheckboxUGUI
             }
         }
 
-        public void CollectIcons(List<ICheckboxIcon> results)
+        public void CollectIcons(List<ICheckboxItem> results)
         {
             results.Clear();
             transform.GetComponentsInChildren(_iconBuffer);
         }
 
-        public int GetClosestIcon(IReadOnlyList<ICheckboxIcon> icons, Vector2 position)
+        public int GetClosestIcon(IReadOnlyList<ICheckboxItem> icons, Vector2 position)
         {
             var closestIndex = -1;
             var closestDistance = float.MaxValue;
