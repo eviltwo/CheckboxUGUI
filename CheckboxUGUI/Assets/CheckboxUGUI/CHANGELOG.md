@@ -1,6 +1,9 @@
 # Changelog
 
 ## [0.5.2] - Development
+### Changed
+- Radio buttons no longer call the OnValueChanged event within Awake().
+
 ### Fixed
 - Fixed the scale to 1 when creating a checkbox from CreateMenu.
 
