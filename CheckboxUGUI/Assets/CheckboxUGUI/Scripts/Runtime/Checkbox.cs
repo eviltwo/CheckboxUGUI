@@ -57,7 +57,6 @@ namespace CheckboxUGUI
                 if (_itemBuffer.Count > 0 && !_itemBuffer.Any(v => v.GetState()))
                 {
                     _itemBuffer[0].SetState(true);
-                    OnValueChanged.Invoke();
                 }
             }
         }
@@ -79,12 +78,7 @@ namespace CheckboxUGUI
                 _selectedItem = nextItem;
                 if (TurnOnWhenSelected)
                 {
-                    _selectedItem.SetState(true);
-                    if (IsRadioButton)
-                    {
-                        SetOffOthers(_selectedItem, _itemBuffer);
-                    }
-                    OnValueChanged.Invoke();
+                    SetItemStateAndNotifyIfChanged(_selectedItem, true);
                 }
             }
         }
@@ -115,12 +109,7 @@ namespace CheckboxUGUI
                         _selectedItem = nextItem;
                         if (TurnOnWhenSelected)
                         {
-                            _selectedItem.SetState(true);
-                            if (IsRadioButton)
-                            {
-                                SetOffOthers(_selectedItem, _itemBuffer);
-                            }
-                            OnValueChanged.Invoke();
+                            SetItemStateAndNotifyIfChanged(_selectedItem, true);
                         }
                     }
                 }
@@ -188,14 +177,12 @@ namespace CheckboxUGUI
                     _selectedItem = item;
                     if (IsRadioButton)
                     {
-                        item.SetState(true);
-                        SetOffOthers(item, _itemBuffer);
+                        SetItemStateAndNotifyIfChanged(_selectedItem, true);
                     }
                     else
                     {
-                        item.SetState(!item.GetState());
+                        SetItemStateAndNotifyIfChanged(_selectedItem, !item.GetState());
                     }
-                    OnValueChanged.Invoke();
                 }
             }
         }
@@ -208,14 +195,12 @@ namespace CheckboxUGUI
                 var item = _itemBuffer[_selectedIndex];
                 if (IsRadioButton)
                 {
-                    item.SetState(true);
-                    SetOffOthers(item, _itemBuffer);
+                    SetItemStateAndNotifyIfChanged(_selectedItem, true);
                 }
                 else
                 {
-                    item.SetState(!item.GetState());
+                    SetItemStateAndNotifyIfChanged(_selectedItem, !item.GetState());
                 }
-                OnValueChanged.Invoke();
             }
         }
 
@@ -268,6 +253,19 @@ namespace CheckboxUGUI
             if (next != null && !next.IsDestroyed())
             {
                 next.NotifySelect();
+            }
+        }
+
+        private void SetItemStateAndNotifyIfChanged(ICheckboxItem item, bool isOn)
+        {
+            if (item.GetState() != isOn)
+            {
+                item.SetState(isOn);
+                if (isOn && IsRadioButton)
+                {
+                    SetOffOthers(_selectedItem, _itemBuffer);
+                }
+                OnValueChanged.Invoke();
             }
         }
 
