@@ -21,11 +21,11 @@ When selecting a checkbox with the keyboard, the first item or the last selected
 https://github.com/eviltwo/CheckBoxUGUI.git?path=CheckBoxUGUI/Assets/CheckBoxUGUI
 ```
 
-# How to Use  
-- Attach the Checkbox component to the game object.  
-  - It will function even if a background image is set.  
-- Attach the CheckboxItemTrigger component to the child game objects of the Checkbox object.  
-- Register UI animations to the OnSelect, OnDeselect, and OnValueChanged events.  
+# Usage
+- Create a Canvas.
+- Select UI/Checkbox from the Create menu.
+
+<img src="https://github.com/user-attachments/assets/78de2f38-4bed-4b21-a2c2-af5bacbbb7ea" width="300">
 
 # Support My Work
 As a solo developer, your financial support would be greatly appreciated and helps me continue working on this project.
