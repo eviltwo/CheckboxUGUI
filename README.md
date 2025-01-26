@@ -1,4 +1,4 @@
-# CheckBox uGUI
+# Checkbox uGUI
 Checkbox and Radio button for uGUI.
 
 ![Checkbox](https://github.com/user-attachments/assets/340ffb6c-c2c5-4d43-b047-5822798ab281)
@@ -13,7 +13,7 @@ When selecting a checkbox with the keyboard, the last selected item is chosen.
 
 # Install with UPM
 ```
-https://github.com/eviltwo/CheckBoxUGUI.git?path=CheckBoxUGUI/Assets/CheckBoxUGUI
+https://github.com/eviltwo/CheckboxUGUI.git?path=CheckboxUGUI/Assets/CheckboxUGUI
 ```
 
 # Usage
