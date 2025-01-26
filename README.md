@@ -1,5 +1,5 @@
 # Checkbox uGUI
-Checkbox and Radio button for uGUI.
+Checkbox and Radio button for Unity uGUI.
 
 ![Checkbox](https://github.com/user-attachments/assets/340ffb6c-c2c5-4d43-b047-5822798ab281)
 
