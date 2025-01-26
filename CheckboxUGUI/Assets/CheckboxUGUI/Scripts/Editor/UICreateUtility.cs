@@ -47,6 +47,29 @@ namespace CheckboxUGUI.Editor
             return null;
         }
 
+        public static void SetParentAndAlign(GameObject child, GameObject parent)
+        {
+            if (parent == null)
+                return;
+
+            Undo.SetTransformParent(child.transform, parent.transform, "");
+
+            RectTransform rectTransform = child.transform as RectTransform;
+            if (rectTransform)
+            {
+                rectTransform.anchoredPosition = Vector2.zero;
+                Vector3 localPosition = rectTransform.localPosition;
+                localPosition.z = 0;
+                rectTransform.localPosition = localPosition;
+            }
+            else
+            {
+                child.transform.localPosition = Vector3.zero;
+            }
+            child.transform.localRotation = Quaternion.identity;
+            child.transform.localScale = Vector3.one;
+        }
+
         public static void SetLayerRecursively(GameObject go, int layer)
         {
             go.layer = layer;
