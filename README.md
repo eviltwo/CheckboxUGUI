@@ -7,9 +7,7 @@ Simple navigation.
 
 <img src="https://github.com/user-attachments/assets/a6a542af-aff8-4907-9d1c-6d3e2c169b7b" width="300">
 
-Smooth keyboard navigation.
-
-When selecting a checkbox with the keyboard, the first item or the last selected item is chosen.  
+When selecting a checkbox with the keyboard, the last selected item is chosen.
 
 ![keyboard](https://github.com/user-attachments/assets/106c0856-59fd-4dc3-bea3-12f35a207166)
 
