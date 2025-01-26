@@ -18,7 +18,7 @@ https://github.com/eviltwo/CheckBoxUGUI.git?path=CheckBoxUGUI/Assets/CheckBoxUGU
 
 # Usage
 - Create a Canvas.
-- Select UI/Checkbox from the Create menu.
+- Select `UI/Checkbox` or `UI/RadioButtons` from the Create menu.
 
 <img src="https://github.com/user-attachments/assets/78de2f38-4bed-4b21-a2c2-af5bacbbb7ea" width="300">
 
