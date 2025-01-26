@@ -1,9 +1,6 @@
 # CheckBox uGUI
 Checkbox and Radio button for uGUI.
 
-# Features
-Checkboxes and Radio buttons.
-
 ![Checkbox](https://github.com/user-attachments/assets/340ffb6c-c2c5-4d43-b047-5822798ab281)
 
 Simple navigation.
