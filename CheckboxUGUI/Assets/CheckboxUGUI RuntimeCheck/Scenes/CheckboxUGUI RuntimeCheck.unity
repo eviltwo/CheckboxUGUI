@@ -1225,6 +1225,7 @@ GameObject:
   - component: {fileID: 940469399}
   - component: {fileID: 940469400}
   - component: {fileID: 940469404}
+  - component: {fileID: 940469405}
   - component: {fileID: 940469403}
   m_Layer: 5
   m_Name: Checkbox
@@ -1353,6 +1354,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fbce76bf7d66b49a22053ac5601946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &940469405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940469398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b01393840c71a408003f8b8879d24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _index: 1
 --- !u!1 &999021638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,6 +1378,7 @@ GameObject:
   - component: {fileID: 999021639}
   - component: {fileID: 999021641}
   - component: {fileID: 999021642}
+  - component: {fileID: 999021643}
   - component: {fileID: 999021640}
   m_Layer: 5
   m_Name: RadioButton
@@ -1492,6 +1507,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fbce76bf7d66b49a22053ac5601946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &999021643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999021638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b01393840c71a408003f8b8879d24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _index: 2
 --- !u!1 &1017062498
 GameObject:
   m_ObjectHideFlags: 0
