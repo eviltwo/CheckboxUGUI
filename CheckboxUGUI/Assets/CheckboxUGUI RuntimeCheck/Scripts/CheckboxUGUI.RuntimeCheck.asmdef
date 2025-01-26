@@ -1,0 +1,16 @@
+{
+    "name": "CheckboxUGUI.RuntimeCheck",
+    "rootNamespace": "CheckboxUGUI.RuntimeCheck",
+    "references": [
+        "GUID:19835828c983bae4991389c0d77b85cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
