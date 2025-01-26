@@ -4,6 +4,8 @@
 ### Changed
 - Radio buttons no longer call the OnValueChanged event within Awake().
 - Radio buttons no longer call the OnValueChanged event when there is no change upon selection.
+### Added
+- Added a function to change the checkbox on/off state externally.
 
 ### Fixed
 - Fixed the scale to 1 when creating a checkbox from CreateMenu.
