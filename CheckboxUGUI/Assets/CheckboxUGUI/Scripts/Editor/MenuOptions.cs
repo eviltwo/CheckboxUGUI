@@ -35,7 +35,7 @@ namespace CheckboxUGUI.Editor
         {
             var resources = UICreateUtility.GetStandardResources();
             var root = ObjectFactory.CreateGameObject("Checkbox", typeof(Checkbox), typeof(GridLayoutGroup));
-            Undo.SetTransformParent(root.transform, parent.transform, "");
+            UICreateUtility.SetParentAndAlign(root, parent);
             var rectTransform = root.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = Vector2.zero;
             rectTransform.sizeDelta = new Vector2(100, 100);

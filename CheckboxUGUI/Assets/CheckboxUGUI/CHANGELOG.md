@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.2] - Development
+### Fixed
+- Fixed the scale to 1 when creating a checkbox from CreateMenu.
+
 ## [0.5.1] - 2025-01-26
 ### Added
 - Added create menu.
