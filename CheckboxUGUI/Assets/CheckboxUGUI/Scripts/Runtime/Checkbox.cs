@@ -57,7 +57,6 @@ namespace CheckboxUGUI
                 if (_itemBuffer.Count > 0 && !_itemBuffer.Any(v => v.GetState()))
                 {
                     _itemBuffer[0].SetState(true);
-                    OnValueChanged.Invoke();
                 }
             }
         }
